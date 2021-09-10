@@ -23,17 +23,17 @@ module ALU
     
     
     //Vars
-    reg [N_BITS - 1 : 0] A = i_A;
-    reg [N_BITS - 1 : 0] B = i_B;
-    reg [N_BITS - 1 : 0] OP = i_OP;
-    reg [N_BITS - 1 : 0] RESULT = 0; 
+    reg [N_BITS - 1 : 0] A;
+    reg [N_BITS - 1 : 0] B;
+    reg [N_BITS - 1 : 0] OP;
+    reg [N_BITS - 1 : 0] RESULT; 
     
-    //initial begin        
-    //A = i_A;
-    //B = i_B;
-    //OP = i_OP;
-    //RESULT = 0;
-    //end
+    initial begin        
+    A = i_A;
+    B = i_B;
+    OP = i_OP;
+    RESULT = 0;
+    end
 
     always @(posedge clock) begin
         case(OP)

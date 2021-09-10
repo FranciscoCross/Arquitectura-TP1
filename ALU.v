@@ -1,15 +1,15 @@
 module ALU
   #(
     parameter N_BITS  = 6,
-    parameter N_LEDS  = 6,
+    parameter N_LEDS  = 6
     )
    (
-    output [N_LEDS - 1 : 0] o_led   ,
-    input  [NB_SW  - 1 : 0] i_A     ,
-    input  [NB_SW  - 1 : 0] i_B     ,
-    input  [NB_SW  - 1 : 0] i_OP    ,
-    input                   reset   ,
-    input                   clock
+    output wire [N_LEDS - 1 : 0] o_led   ,
+    input wire  [N_BITS  - 1 : 0] i_A     ,
+    input wire  [N_BITS  - 1 : 0] i_B     ,
+    input wire  [N_BITS  - 1 : 0] i_OP    ,
+    input wire                  reset   ,
+    input wire                  clock
     );
 
     localparam ADD  = 6'b100000;
@@ -21,41 +21,50 @@ module ALU
     localparam SRL  = 6'b000010;
     localparam NOR  = 6'b100111;
     
+    
     //Vars
-    reg [NB_SW - 1 : 0] A = i_A;
-    reg [NB_SW - 1 : 0] B = i_B;
-    reg [NB_SW - 1 : 0] OP = i_OP;
-    reg [NB_SW - 1 : 0] RES = 0;
+    reg [N_BITS - 1 : 0] A = i_A;
+    reg [N_BITS - 1 : 0] B = i_B;
+    reg [N_BITS - 1 : 0] OP = i_OP;
+    reg [N_BITS - 1 : 0] RESULT = 0; 
+    
+    //initial begin        
+    //A = i_A;
+    //B = i_B;
+    //OP = i_OP;
+    //RESULT = 0;
+    //end
 
-    always @(posedge clock or posedge reset) begin
+    always @(posedge clock) begin
         case(OP)
         ADD:begin
-                RES <= A + B;
+                RESULT <= A + B;
             end
         SUB:begin
-                RES <= A - B;
+                RESULT <= A - B;
             end
         AND:begin
-                RES <= A and B;
+                RESULT <= A & B;
             end
         OR:begin
-                RES <= A or B;
+                RESULT <= A | B;
             end
         XOR:begin
-                RES <= A xor B;
+                RESULT <= A ^ B;
             end
         SRA:begin
-                RES <= A >> B;
+                RESULT <= A >> B;
             end
         SRL:begin
-                RES <= A << B;
+                RESULT <= A << B;
             end
         NOR:begin
-                RES <= A ~| B;
-            end          
+                RESULT <= ~(A | B);
+            end
+            endcase          
     end
 
 
-assign o_led = RES;
+assign o_led = RESULT;
 
 endmodule //ALU

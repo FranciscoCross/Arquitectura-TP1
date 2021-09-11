@@ -1,0 +1,25 @@
+#-----------------------------------------------------------
+# Vivado v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:33 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Fri Sep 10 18:04:35 2021
+# Process ID: 14228
+# Current directory: D:/Reposgit/Arquitectura-TP1/TP1_ALU
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent10660 D:\Reposgit\Arquitectura-TP1\TP1_ALU\TP1_ALU.xpr
+# Log file: D:/Reposgit/Arquitectura-TP1/TP1_ALU/vivado.log
+# Journal file: D:/Reposgit/Arquitectura-TP1/TP1_ALU\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project D:/Reposgit/Arquitectura-TP1/TP1_ALU/TP1_ALU.xpr
+update_compile_order -fileset sim_1
+update_compile_order -fileset sources_1
+add_files -norecurse D:/Reposgit/Arquitectura-TP1/src/ALU.v
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+add_files -fileset sim_1 -norecurse D:/Reposgit/Arquitectura-TP1/src/tb_ALU.v
+update_compile_order -fileset sim_1
+update_compile_order -fileset sim_1
+launch_simulation
+launch_simulation
+launch_simulation
+source tb_ALU.tcl
+close_sim

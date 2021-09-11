@@ -32,11 +32,11 @@ module ALU
     A = i_A;
     B = i_B;
     OP = i_OP;
-    RESULT = 0;
     end
 
     always @(posedge clock) begin
-        case(OP)
+        RESULT=0;
+        case(OP) //Hay un problema acá, no entra a ningun case
         ADD:begin
                 RESULT <= A + B;
             end

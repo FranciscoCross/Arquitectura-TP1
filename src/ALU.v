@@ -23,43 +23,38 @@ module ALU
     
     
     //Vars
-    reg [N_BITS - 1 : 0] A;
-    reg [N_BITS - 1 : 0] B;
-    reg [N_BITS - 1 : 0] OP;
     reg [N_BITS - 1 : 0] RESULT; 
-    
-    initial begin        
-    A = i_A;
-    B = i_B;
-    OP = i_OP;
-    end
+       
+    //A = i_A;
+    //B = i_B;
+    //OP = i_OP;
+
 
     always @(posedge clock) begin
-        RESULT=0;
-        case(OP) //Hay un problema acá, no entra a ningun case
+        case(i_OP) //Hay un problema acá, no entra a ningun case
         ADD:begin
-                RESULT <= A + B;
+                RESULT <= i_A + i_B;
             end
         SUB:begin
-                RESULT <= A - B;
+                RESULT <= i_A - i_B;
             end
         AND:begin
-                RESULT <= A & B;
+                RESULT <= i_A & i_B;
             end
         OR:begin
-                RESULT <= A | B;
+                RESULT <= i_A | i_B;
             end
         XOR:begin
-                RESULT <= A ^ B;
+                RESULT <= i_A ^ i_B;
             end
         SRA:begin
-                RESULT <= A >> B;
+                RESULT <= i_A >> i_B;
             end
         SRL:begin
-                RESULT <= A << B;
+                RESULT <= i_A << i_B;
             end
         NOR:begin
-                RESULT <= ~(A | B);
+                RESULT <= ~(i_A | i_B);
             end
             endcase          
     end

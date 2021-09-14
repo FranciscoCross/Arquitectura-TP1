@@ -4,8 +4,8 @@ module tb_ALU;
   reg [5 : 0] OP;
   reg reset;
   reg clock;
-  wire [5 : 0] LEDs;
-  reg [5 : 0] RESULT;
+  wire [5 : 0] RES;
+
 
   
   initial begin
@@ -68,7 +68,7 @@ module tb_ALU;
   always #1 clock = ~clock;
    
   ALU instance_ALU(
-        .o_led(LEDs), 
+        .o_res(RES), 
         .i_A (A), 
         .i_B (B), 
         .i_OP(OP),

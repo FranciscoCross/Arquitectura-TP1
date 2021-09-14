@@ -4,12 +4,12 @@ module ALU
     parameter N_LEDS  = 6
     )
    (
-    output wire [N_LEDS - 1 : 0] o_led   ,
+    output wire [N_LEDS - 1 : 0]  o_res   ,
     input wire  [N_BITS  - 1 : 0] i_A     ,
     input wire  [N_BITS  - 1 : 0] i_B     ,
     input wire  [N_BITS  - 1 : 0] i_OP    ,
-    input wire                  reset   ,
-    input wire                  clock
+    input wire                    reset   ,
+    input wire                    clock
     );
 
     localparam ADD  = 6'b100000;
@@ -31,35 +31,27 @@ module ALU
 
 
     always @(posedge clock) begin
-        case(i_OP) //Hay un problema acá, no entra a ningun case
-        ADD:begin
-                RESULT <= i_A + i_B;
-            end
-        SUB:begin
-                RESULT <= i_A - i_B;
-            end
-        AND:begin
-                RESULT <= i_A & i_B;
-            end
-        OR:begin
-                RESULT <= i_A | i_B;
-            end
-        XOR:begin
-                RESULT <= i_A ^ i_B;
-            end
-        SRA:begin
-                RESULT <= i_A >> i_B;
-            end
-        SRL:begin
-                RESULT <= i_A << i_B;
-            end
-        NOR:begin
-                RESULT <= ~(i_A | i_B);
-            end
-            endcase          
+        case(i_OP) 
+        ADD:
+            RESULT <= (i_A + i_B);
+        SUB:
+            RESULT <= (i_A - i_B);
+        AND:
+            RESULT <= (i_A & i_B);
+        OR:
+            RESULT <= (i_A | i_B); 
+        XOR:
+            RESULT <= (i_A ^ i_B);
+        SRA:
+            RESULT <= (i_A >> i_B);
+        SRL:
+            RESULT <= (i_A << i_B);
+        NOR:
+            RESULT <= ~(i_A | i_B);
+        endcase          
     end
 
 
-assign o_led = RESULT;
+assign o_res = RESULT;
 
 endmodule //ALU

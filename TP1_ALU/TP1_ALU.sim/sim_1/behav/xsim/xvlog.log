@@ -1,4 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Reposgit/Arquitectura-TP1/src/ALU.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module ALU
-INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Reposgit/Arquitectura-TP1/src/tb_ALU.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module tb_ALU

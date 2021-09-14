@@ -10,14 +10,11 @@ module top_ALU
     input wire                    reset ,
     input wire                    clock
     );
-
-
-
+    //Registros para almacenar los valores
     reg [N_SW - 1 : 0] reg_A;
     reg [N_SW - 1 : 0] reg_B;
     reg [N_SW - 1 : 0] reg_OP;
     
-<<<<<<< HEAD
     always @(posedge clock or posedge reset) begin
         if(reset)
             begin
@@ -36,17 +33,6 @@ module top_ALU
                     reg_OP <= i_SWs;
                 endcase
             end        
-=======
-    always @(posedge clock) begin
-        case(i_buttons) 
-        3'b100:
-            reg_A <= i_SWs;
-        3'b010:
-            reg_B <= i_SWs;
-        3'b001:
-            reg_OP <= i_SWs;
-        endcase          
->>>>>>> 628b8ce4a7f5b9d14fd28044d7ec9db0c465f105
     end
 
 ALU instance_ALU(

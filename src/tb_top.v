@@ -11,12 +11,20 @@ module tb_top;
   initial begin
     $dumpfile("dump.vcd"); $dumpvars;
     clock = 0;
+<<<<<<< HEAD
     reset = 1;
     
     SW = 0;
     B = 0;
     #2
     reset = 0;
+=======
+    reset = 0;
+    
+    SW = 0;
+    B = 0;
+    
+>>>>>>> 628b8ce4a7f5b9d14fd28044d7ec9db0c465f105
     #5
     SW = 6'b000011; 
     B =  3'b100;     //A

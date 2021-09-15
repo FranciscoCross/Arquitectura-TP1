@@ -121,7 +121,7 @@ module tb_top;
                 SRA:
                     begin
                         $display("SRA");
-                        if(LEDs == (top_ALU.reg_A >> top_ALU.reg_B))
+                        if(LEDs == (top_ALU.reg_A >>> top_ALU.reg_B))
                         begin 
                            $display("SRA Correcto\n\n"); 
                         end
@@ -129,7 +129,7 @@ module tb_top;
                 SRL:
                     begin
                         $display("SRL");
-                        if(LEDs == (top_ALU.reg_A <<  top_ALU.reg_B))
+                        if(LEDs == (top_ALU.reg_A >>  top_ALU.reg_B))
                         begin 
                            $display("SRL Correcto\n\n"); 
                         end

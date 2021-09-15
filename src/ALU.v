@@ -49,9 +49,9 @@ module ALU
                 XOR:
                     RESULT <= (i_A ^ i_B);
                 SRA:
-                    RESULT <= (i_A >> i_B);
+                    RESULT <= (i_A >>> i_B);
                 SRL:
-                    RESULT <= (i_A << i_B);
+                    RESULT <= (i_A >> i_B);
                 NOR:
                     RESULT <= ~(i_A | i_B);
                 endcase

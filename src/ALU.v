@@ -1,10 +1,10 @@
 module ALU
   #(
-    parameter N_BITS  = 6,
-    parameter N_LEDS  = 6
+    parameter N_BITS = 6,
+    parameter N_LEDS = 6
     )
    (
-    output wire [N_LEDS - 1 : 0]  o_res   ,
+    output wire [N_BITS - 1 : 0]  o_res   ,
     input wire  [N_BITS  - 1 : 0] i_A     ,
     input wire  [N_BITS  - 1 : 0] i_B     ,
     input wire  [N_BITS  - 1 : 0] i_OP    ,

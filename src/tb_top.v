@@ -6,7 +6,21 @@ module tb_top;
     reg [N_BITS - 1 : 0] SW;
     reg [N_B - 1 : 0] B;
     reg reset;
+    reg [5 : 0] OPs [7:0];
     reg clock;
+    reg [2 : 0] AUX;
+    reg [15 : 0] NUM;
+    
+    localparam ADD  = 6'b100000;
+    localparam SUB  = 6'b100010;
+    localparam AND  = 6'b100100;
+    localparam OR   = 6'b100101;
+    localparam XOR  = 6'b100110;
+    localparam SRA  = 6'b000011;
+    localparam SRL  = 6'b000010;
+    localparam NOR  = 6'b100111;
+    
+   
     
     wire [N_LEDS - 1 : 0] LEDs;
       
@@ -14,6 +28,16 @@ module tb_top;
     always #1 clock = ~clock;  
     
     initial begin
+    OPs[0] = ADD;
+    OPs[1] = SUB;
+    OPs[2] = AND;
+    OPs[3] = OR;
+    OPs[4] = XOR;
+    OPs[5] = SRA;
+    OPs[6] = SRL;
+    OPs[7] = NOR;
+    
+    $display("El valor de ADD es: %b", OPs[0]);
     $dumpfile("dump.vcd"); $dumpvars;
     $display("Comienza la simulacion");
     clock = 0;
@@ -25,214 +49,104 @@ module tb_top;
     reset = 0;
     #5
     SW = $random; 
-    
-    //CASE ADD
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b100;     //A
-    $display("Toco el boton correspondiente a A = %d", B);
-    
-    #5
-    SW = $random; 
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b010;     //B
-    $display("Toco el boton correspondiente a B = %d", B);
-    
-    #5
-    SW = 6'b100000;
-    $display("Cargo el codigo ADD en los SWs = %d", SW);
-    B =  3'b001;     //OP ADD
-    $display("Toco el boton correspondiente a OP = %d", B);
-    #5
-    $display("El resultado es: %d", LEDs);
-    begin
-        if(LEDs == (top_ALU.reg_A + top_ALU.reg_B))
-        begin 
-           $display("ADD Correcto\n\n"); 
-        end
     end
     
+    
+    always @(posedge clock or posedge reset) begin
+        #5
+        NUM = $random;
+        SW = NUM;
+        $display("Cargo un valor random en los SWs = DECIMA %d, BINARIO %b ", SW, SW);
+        B =  3'b100;     //A
+        $display("Boton A = %d", B);
         
-    //CASE SUB
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b100;     //A
-    $display("Toco el boton correspondiente a A = %d", B);
-    
-    #5
-    SW = $random; 
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b010;     //B
-    $display("Toco el boton correspondiente a B = %d", B);
-    
-    #5
-    SW = 6'b100010;
-    $display("Cargo el codigo SUB en los SWs = %d", SW);
-    B =  3'b001;     //OP SUB
-    $display("Toco el boton correspondiente a OP = %d", B);
-    #5
-    $display("El resultado es: %d", LEDs);
-    begin
-        if(LEDs == (top_ALU.reg_A - top_ALU.reg_B))
-        begin 
-           $display("SUB Correcto\n\n"); 
+        #5
+        NUM = $random;
+        SW = NUM;
+        $display("Cargo un valor random en los SWs = DECIMA %d, BINARIO %b ", SW, SW);
+        B =  3'b010;     //B
+        $display("Boton B = %d", B);
+        
+        #5
+        AUX = $random;
+        $display("El valor de AUX es: %b", AUX);
+        SW = OPs[AUX];
+        $display("Cargo el codigo OP en SWs = %d", SW);
+        B =  3'b001;     //OP ADD
+        $display("Boton de OP = %d", B);
+        #5
+        $display("El resultado es: DECIMAL %d, BINARIO %b", LEDs, LEDs);
+        begin
+            case(SW) 
+                ADD:
+                    begin
+                        $display("ADD");
+                        if(LEDs == (top_ALU.reg_A + top_ALU.reg_B))
+                        begin 
+                           $display("ADD Correcto\n\n"); 
+                        end
+                    end                    
+                SUB:
+                    begin
+                        $display("SUB");
+                        if(LEDs == (top_ALU.reg_A - top_ALU.reg_B))
+                        begin 
+                           $display("SUB Correcto\n\n"); 
+                        end
+                    end
+                AND:
+                    begin
+                        $display("AND");
+                        if(LEDs == (top_ALU.reg_A & top_ALU.reg_B))
+                        begin 
+                           $display("AND Correcto\n\n"); 
+                        end
+                    end
+                OR:
+                    begin
+                        $display("OR");
+                        if(LEDs == (top_ALU.reg_A | top_ALU.reg_B))
+                        begin 
+                           $display("OR Correcto\n\n"); 
+                        end
+                    end
+                XOR:
+                    begin
+                        $display("XOR");
+                        if(LEDs == (top_ALU.reg_A ^ top_ALU.reg_B))
+                        begin 
+                           $display("XOR Correcto\n\n"); 
+                        end
+                    end
+                SRA:
+                    begin
+                        $display("SRA");
+                        if(LEDs == (top_ALU.reg_A >> top_ALU.reg_B))
+                        begin 
+                           $display("SRA Correcto\n\n"); 
+                        end
+                    end
+                SRL:
+                    begin
+                        $display("SRL");
+                        if(LEDs == (top_ALU.reg_A <<  top_ALU.reg_B))
+                        begin 
+                           $display("SRL Correcto\n\n"); 
+                        end
+                    end
+                NOR:
+                    begin
+                        $display("NOR");
+                        if(LEDs == ~(top_ALU.reg_A | top_ALU.reg_B))
+                        begin 
+                           $display("NOR Correcto\n\n"); 
+                        end
+                    end
+                endcase
         end
     end
-
-
-
-    //CASE AND
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b100;     //A
-    $display("Toco el boton correspondiente a A = %d", B);
-    
-    #5
-    SW = $random; 
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b010;     //B
-    $display("Toco el boton correspondiente a B = %d", B);
-    
-    #5
-    SW = 6'b100100;
-    $display("Cargo el codigo AND en los SWs = %d", SW);
-    B =  3'b001;     //OP AND
-    $display("Toco el boton correspondiente a OP = %d", B);
-    #5
-    $display("El resultado es: %d", LEDs);
-    begin
-        if(LEDs == (top_ALU.reg_A & top_ALU.reg_B))
-        begin 
-           $display("AND Correcto\n\n"); 
-        end
-    end
-    
-    //CASE OR
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b100;     //A
-    $display("Toco el boton correspondiente a A = %d", B);
-    
-    #5
-    SW = $random; 
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b010;     //B
-    $display("Toco el boton correspondiente a B = %d", B);
-    
-    #5
-    SW = 6'b100101;
-    $display("Cargo el codigo OR en los SWs = %d", SW);
-    B =  3'b001;     //OP OR
-    $display("Toco el boton correspondiente a OP = %d", B);
-    #5
-    $display("El resultado es: %d", LEDs);
-    begin
-        if(LEDs == (top_ALU.reg_A | top_ALU.reg_B))
-        begin 
-           $display("OR Correcto\n\n"); 
-        end
-    end
-    
-    //CASE XOR
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b100;     //A
-    $display("Toco el boton correspondiente a A = %d", B);
-    
-    #5
-    SW = $random; 
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b010;     //B
-    $display("Toco el boton correspondiente a B = %d", B);
-    
-    #5
-    SW = 6'b100110;
-    $display("Cargo el codigo XOR en los SWs = %d", SW);
-    B =  3'b001;     //OP XOR
-    $display("Toco el boton correspondiente a OP = %d", B);
-    #5
-    $display("El resultado es: %d", LEDs);
-    begin
-        if(LEDs == (top_ALU.reg_A ^ top_ALU.reg_B))
-        begin 
-           $display("XOR Correcto\n\n"); 
-        end
-    end    
-    
-    //CASE SRA
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b100;     //A
-    $display("Toco el boton correspondiente a A = %d", B);
-    
-    #5
-    SW = $random; 
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b010;     //B
-    $display("Toco el boton correspondiente a B = %d", B);
-    
-    #5
-    SW = 6'b000011;
-    $display("Cargo el codigo SRA en los SWs = %d", SW);
-    B =  3'b001;     //OP SRA
-    $display("Toco el boton correspondiente a OP = %d", B);
-    #5
-    $display("El resultado es: %d", LEDs);
-    begin
-        if(LEDs == (top_ALU.reg_A >> top_ALU.reg_B))
-        begin 
-           $display("SRA Correcto\n\n"); 
-        end
-    end  
-    
-    
-    //CASE SRL
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b100;     //A
-    $display("Toco el boton correspondiente a A = %d", B);
-    
-    #5
-    SW = $random; 
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b010;     //B
-    $display("Toco el boton correspondiente a B = %d", B);
-    
-    #5
-    SW = 6'b000010;
-    $display("Cargo el codigo SRL en los SWs = %d", SW);
-    B =  3'b001;     //OP SRL
-    $display("Toco el boton correspondiente a OP = %d", B);
-    #5
-    $display("El resultado es: %d", LEDs);
-    begin
-        if(LEDs == (top_ALU.reg_A << top_ALU.reg_B))
-        begin 
-           $display("SRL Correcto\n\n"); 
-        end
-    end      
-
-    //CASE NOR
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b100;     //A
-    $display("Toco el boton correspondiente a A = %d", B);
-    
-    #5
-    SW = $random; 
-    $display("Cargo un valor random en los SWs = %d", SW);
-    B =  3'b010;     //B
-    $display("Toco el boton correspondiente a B = %d", B);
-    
-    #5
-    SW = 6'b100111;
-    $display("Cargo el codigo NOR en los SWs = %d", SW);
-    B =  3'b001;     //OP NOR
-    $display("Toco el boton correspondiente a OP = %d", B);
-    #5
-    $display("El resultado es: %d", LEDs);
-    begin
-        if(LEDs == ~(top_ALU.reg_A | top_ALU.reg_B))
-        begin 
-           $display("NOR Correcto\n\n"); 
-        end
-    end      
-
-       
-  end
-
+     
+   
    
 top_ALU#(N_BITS, N_LEDS, N_B) top_ALU(  
         .o_led(LEDs), 

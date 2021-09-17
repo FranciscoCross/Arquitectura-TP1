@@ -2,16 +2,13 @@ module tb_ALU;
   reg [5 : 0] A;
   reg [5 : 0] B;
   reg [5 : 0] OP;
-  reg reset;
-  reg clock;
   wire [5 : 0] RES;
+
 
 
   
   initial begin
     $dumpfile("dump.vcd"); $dumpvars;
-    clock = 0;
-    reset = 0;
     
     A = 0;
     B = 0;
@@ -40,7 +37,6 @@ module tb_ALU;
     #5
     A = 8; //001000
     B = 2; //000010
-           //111000
     OP = 6'b100111; //XOR
     
     #5
@@ -56,7 +52,6 @@ module tb_ALU;
     #5
     A = 8; //10110
     B = 12; //01010
-            //00001
     OP = 6'b100111; //NOR
     
     #5
@@ -64,16 +59,12 @@ module tb_ALU;
     B = 0; 
     OP = 6'b100111; //AND
   end
-  
-  always #1 clock = ~clock;
    
   ALU instance_ALU(
         .o_res(RES), 
         .i_A (A), 
         .i_B (B), 
-        .i_OP(OP),
-        .reset(reset),
-        .clock(clock)
+        .i_OP(OP)
   );
   
    endmodule

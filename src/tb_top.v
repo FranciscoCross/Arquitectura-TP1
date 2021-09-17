@@ -71,7 +71,7 @@ module tb_top;
         AUX = $random;
         $display("El valor de AUX es: %b", AUX);
         SW = OPs[AUX];
-        $display("Cargo el codigo OP en SWs = %d", SW);
+        $display("Cargo el codigo OP en SWs = %d, %b", SW, SW);
         B =  3'b001;     //OP ADD
         $display("Boton de OP = %d", B);
         #5

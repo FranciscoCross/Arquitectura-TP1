@@ -16,7 +16,7 @@ module top_ALU
     reg [N_BITS - 1 : 0] reg_B;
     reg [N_BITS - 1 : 0] reg_OP;
     
-    always @(posedge clock or posedge reset) begin
+    always @(posedge clock) begin
         if(reset)
             begin
                 reg_A  <= 0;

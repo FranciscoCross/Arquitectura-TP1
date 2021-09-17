@@ -1,15 +1,13 @@
 module ALU
   #(
-    parameter N_BITS = 6,
-    parameter N_LEDS = 6
+    parameter N_BITS = 8,
+    parameter N_LEDS = 8
     )
    (
-    output wire [N_BITS - 1 : 0]  o_res   ,
+    output reg [N_LEDS - 1 : 0]  o_res   ,
     input wire  [N_BITS  - 1 : 0] i_A     ,
     input wire  [N_BITS  - 1 : 0] i_B     ,
-    input wire  [N_BITS  - 1 : 0] i_OP    ,
-    input wire                    reset   ,
-    input wire                    clock
+    input wire  [N_BITS  - 1 : 0] i_OP    
     );
 
     localparam ADD  = 6'b100000;
@@ -23,42 +21,35 @@ module ALU
     
     
     //Vars
-    reg [N_BITS - 1 : 0] RESULT; 
        
     //A = i_A;
     //B = i_B;
     //OP = i_OP;
 
 
-    always @(posedge clock or posedge reset) begin
-        if(reset)
-            begin
-                RESULT <= 0;
-            end
-        else
-            begin
-                case(i_OP) 
-                ADD:
-                    RESULT <= (i_A + i_B);
-                SUB:
-                    RESULT <= (i_A - i_B);
-                AND:
-                    RESULT <= (i_A & i_B);
-                OR:
-                    RESULT <= (i_A | i_B); 
-                XOR:
-                    RESULT <= (i_A ^ i_B);
-                SRA:
-                    RESULT <= (i_A >>> i_B);
-                SRL:
-                    RESULT <= (i_A >> i_B);
-                NOR:
-                    RESULT <= ~(i_A | i_B);
-                endcase
-            end  
-    end
+    always @(*) begin
+        case(i_OP) 
+        ADD:
+            o_res = (i_A + i_B);
+        SUB:
+            o_res = (i_A - i_B);
+        AND:
+            o_res = (i_A & i_B);
+        OR:
+            o_res = (i_A | i_B); 
+        XOR:
+            o_res = (i_A ^ i_B);
+        SRA:
+            o_res = (i_A >>> i_B);
+        SRL:
+            o_res = (i_A >> i_B);
+        NOR:
+            o_res = ~(i_A | i_B);
+        default:
+            o_res = 0;
+        endcase
+   end
 
 
-assign o_res = RESULT;
 
 endmodule //ALU

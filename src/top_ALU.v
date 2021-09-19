@@ -1,7 +1,7 @@
 module top_ALU
   #(
-    parameter N_BITS = 6,
-    parameter N_LEDS = 6,
+    parameter N_BITS = 8,
+    parameter N_LEDS = 8,
     parameter N_B   = 3 
     )
    (
@@ -40,9 +40,7 @@ ALU #(N_BITS, N_LEDS)  ALU(
         .o_res(o_led), 
         .i_A (reg_A), 
         .i_B (reg_B), 
-        .i_OP(reg_OP),
-        .reset(reset),
-        .clock(clock)
+        .i_Op(reg_OP)
 );
 
 endmodule //top_ALU

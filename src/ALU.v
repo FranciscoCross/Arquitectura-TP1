@@ -1,13 +1,15 @@
+`timescale 1ns / 1ps
+
 module ALU
   #(
     parameter N_BITS = 8,
-    parameter N_LEDS = 8
+    parameter N_LEDS  = 8
     )
    (
-    output reg [N_LEDS - 1 : 0]  o_res   ,
-    input wire  [N_BITS  - 1 : 0] i_A     ,
-    input wire  [N_BITS  - 1 : 0] i_B     ,
-    input wire  [N_BITS  - 1 : 0] i_OP    
+    output reg [N_LEDS - 1 : 0] o_res,
+    input wire  [N_BITS - 1 : 0] i_A,
+    input wire  [N_BITS - 1 : 0] i_B,
+    input wire  [N_BITS  - 1 : 0] i_Op
     );
 
     localparam ADD  = 6'b100000;
@@ -18,38 +20,28 @@ module ALU
     localparam SRA  = 6'b000011;
     localparam SRL  = 6'b000010;
     localparam NOR  = 6'b100111;
-    
-    
-    //Vars
-       
-    //A = i_A;
-    //B = i_B;
-    //OP = i_OP;
-
 
     always @(*) begin
-        case(i_OP) 
-        ADD:
+        case(i_Op) 
+        ADD: 
             o_res = (i_A + i_B);
-        SUB:
+        SUB: 
             o_res = (i_A - i_B);
-        AND:
+        AND: 
             o_res = (i_A & i_B);
-        OR:
+        OR: 
             o_res = (i_A | i_B); 
-        XOR:
+        XOR: 
             o_res = (i_A ^ i_B);
-        SRA:
+        SRA: //mueve derecha y rellena con signo
             o_res = (i_A >>> i_B);
-        SRL:
+        SRL: //mueve derecha y rellena con ceros
             o_res = (i_A >> i_B);
-        NOR:
+        NOR: 
             o_res = ~(i_A | i_B);
         default:
             o_res = 0;
-        endcase
-   end
-
-
-
-endmodule //ALU
+        endcase                 
+    end
+    
+endmodule

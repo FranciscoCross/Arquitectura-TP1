@@ -1,70 +1,87 @@
+`timescale 1ns / 1ps
+
 module tb_ALU;
-  reg [5 : 0] A;
-  reg [5 : 0] B;
-  reg [5 : 0] OP;
-  wire [5 : 0] RES;
 
-
-
+  localparam N_BITS = 8;
+  localparam N_LEDS = 8;
   
+  reg [N_BITS - 1 : 0] A;
+  reg [N_BITS - 1 : 0] B;
+  reg [N_BITS - 1 : 0] OP;
+  reg       clk;
+  wire [N_LEDS-1 : 0] LEDS;
+
+  always #1 clk = ~clk;
   initial begin
     $dumpfile("dump.vcd"); $dumpvars;
-    
+    clk = 1;
     A = 0;
     B = 0;
     OP = 0;
     
-    #5
-    A = 2;
+    #10
+    A = 3;
     B = 3;
     OP = 6'b100000; //ADD
     
-    #5
+    #10
     A = 6;
-    B = 5;
-    OP = 6'b100010; //SUB
-    
-    #5
-    A = 7;
-    B = 7;
-    OP = 6'b100100; //AND
-
-    #5
-    A = 5;
     B = 2;
+    OP = 6'b100010; //SUB
+
+    
+    #10
+    A = 3; 
+    B = 9; 
+    OP = 6'b100100; //AND
+    
+    #10
+    A = 5; 
+    B = 2; 
     OP = 6'b100101; //OR
+   
+    #10
+    A = 7; 
+    B = 2; 
+    OP = 6'b100110; //XOR
     
-    #5
-    A = 8; //001000
-    B = 2; //000010
-    OP = 6'b100111; //XOR
-    
-    #5
-    A = 15;
+    #10
+    A = 15; 
     B = 1;
     OP = 6'b000011; //SRA
+   
     
-    #5
-    A = 15;
-    B = 1;
+    #10
+    A = 16; 
+    B = 2;
     OP = 6'b000010; //SRL
+
     
-    #5
-    A = 8; //10110
-    B = 12; //01010
+    #10
+    A = 15; //00 1111
+    B = 4; //01 0100
     OP = 6'b100111; //NOR
+
     
-    #5
-    A = 0; 
-    B = 0; 
-    OP = 6'b100111; //AND
+    #10
+    A = 0;
+    B = 0;
+    OP = 0;
+    
+    #10
+    $finish;
+
   end
    
-  ALU instance_ALU(
-        .o_res(RES), 
-        .i_A (A), 
-        .i_B (B), 
-        .i_OP(OP)
-  );
+  ALU #(
+    .N_BITS(N_BITS),
+    .N_LEDS(N_LEDS)
+    ) 
+    instance_ALU(
+        .o_res(LEDS), 
+        .i_A(A), 
+        .i_B(B), 
+        .i_Op(OP)
+    );
   
    endmodule

@@ -1,6 +1,7 @@
+`timescale 100ns / 1ps
 module tb_top;
-    parameter N_BITS = 6;
-    parameter N_LEDS = 6;
+    parameter N_BITS = 8;
+    parameter N_LEDS = 8;
     parameter N_B = 3;
     
     reg [N_BITS - 1 : 0] SW;

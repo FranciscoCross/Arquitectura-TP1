@@ -36,7 +36,10 @@ module top_ALU
             end        
     end
 
-ALU #(N_BITS, N_LEDS)  ALU(
+ALU #(
+    .N_BITS(N_BITS),
+    .N_LEDS(N_LEDS)
+    )  ALU(
         .o_res(o_led), 
         .i_A (reg_A), 
         .i_B (reg_B), 
